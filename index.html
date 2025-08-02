@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Typing Speed Tester</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+      background-color: #f3f3f3;
+    }
+    #textDisplay {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    textarea {
+      width: 100%;
+      height: 100px;
+      font-size: 16px;
+      padding: 10px;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Typing Speed Tester</h1>
+  <div id="textDisplay"></div>
+  <textarea id="inputArea" placeholder="Start typing here..."></textarea>
+  <button onclick="calculateResults()">Submit</button>
+
+  <div class="result" id="result"></div>
+
+  <script>
+    const texts = [
+      "Welcome to Typing Speed Tester",
+      "Java programming is fun",
+      "Practice makes perfect",
+      "This is the practice platform"
+    ];
+
+    const randomText = texts[Math.floor(Math.random() * texts.length)];
+    const textDisplay = document.getElementById("textDisplay");
+    const inputArea = document.getElementById("inputArea");
+    const result = document.getElementById("result");
+
+    textDisplay.innerText = "Type this:\n" + randomText;
+
+    let startTime;
+
+    inputArea.addEventListener("focus", () => {
+      if (!startTime) {
+        startTime = new Date().getTime();
+      }
+    });
+
+    function calculateResults() {
+      const endTime = new Date().getTime();
+      const typedText = inputArea.value.trim();
+
+      // Error calculation
+      let errors = 0;
+      const minLength = Math.min(randomText.length, typedText.length);
+      for (let i = 0; i < minLength; i++) {
+        if (randomText[i] !== typedText[i]) {
+          errors++;
+        }
+      }
+      errors += Math.abs(randomText.length - typedText.length);
+
+      const accuracy = ((randomText.length - errors) / randomText.length) * 100;
+
+      const timeTaken = (endTime - startTime) / 1000; // in seconds
+      const wordCount = typedText.split(/\s+/).length;
+      const wpm = (wordCount / timeTaken) * 60;
+
+      result.innerHTML = `
+        <p><strong>Your Typing Speed:</strong> ${wpm.toFixed(2)} WPM</p>
+        <p><strong>Accuracy:</strong> ${accuracy.toFixed(2)}%</p>
+        <p><strong>Errors:</strong> ${errors}</p>
+      `;
+
+      startTime = null; // reset for next round
+    }
+  </script>
+
+</body>
+</html>
