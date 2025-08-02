@@ -1,0 +1,67 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
+ */
+package typing_speed_tester;
+
+import java.util.*;
+
+/**
+ *
+ * @author Aravinth M
+ */
+public class Typing_Speed_Tester {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // random texts array
+        String[] texts = {
+            "Welcome to Typing Speed Tester",
+            "Java programming is fun",
+            "Practice makes perfect",
+            "This is the practice platform"
+        };
+        //select random text
+        Random random = new Random();
+        String randomText = texts[random.nextInt(texts.length)];
+        System.out.println("Type this: " + randomText);
+       
+        //start timer
+        Scanner get=new Scanner(System.in);
+        long startTime = System.currentTimeMillis();
+
+        //capture user inputs
+        System.out.println("Start Typing:");
+        String getText = get.nextLine();
+        long endTime = System.currentTimeMillis();
+        
+        //Error Detection 
+        int errors = 0;
+        int length = Math.min(randomText.length(), getText.length());
+        
+        for(int i=0; i<length; i++){
+            if(getText.charAt(i) != randomText.charAt(i))
+                errors++;
+        }
+        
+        //Count remaining char as errors (if users input is shorter)
+        errors += Math.abs(randomText.length() - getText.length());
+        
+        //Calculate Accuracy
+        double accuracy = ((double)(randomText.length() - errors) / randomText.length()) * 100;
+        
+        //calculate type speed
+        int words = getText.split(" ").length;
+        double timeTaken = (endTime - startTime) / 1000.0; // Time in seconds
+        double speed = words / (timeTaken / 60); // Convert seconds to minutes
+        
+        //Display results
+        System.out.println("Your Typing Spees: "+speed+" WPM");
+        System.out.println("Accuracy: "+accuracy+"%");
+        System.out.println("Errors: "+errors);
+    }
+}
+    
+
