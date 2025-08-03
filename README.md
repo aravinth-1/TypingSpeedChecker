@@ -1,2 +1,1 @@
-# TypingSpeedChecker
-This project is used to check the Typing Speed for the beginners to improve their Typing skills. This project is developed in JS for the testing logic and HTML for UI design.
+Developed a typing speed testing system in both desktop. The application displays random sentences for the user to type, calculates Words Per Minute (WPM), accuracy, and highlights errors. The desktop version was built using Core Java.
